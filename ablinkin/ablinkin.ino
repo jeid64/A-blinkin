@@ -11,22 +11,31 @@ int clockPin = P1_5;
 int byte1 = 0;         //The counter for storing the byte #1 value
 int byte2 = 0;         //The counter for storing the byte #2 value
 
+char inChar;
+
 void setup()
 {
   pinMode(dataPin, OUTPUT);       //Configure each IO Pin
   pinMode(latchPin, OUTPUT);
   pinMode(clockPin, OUTPUT);
+  Serial.begin(4800);
 }
 
 void loop()
 {
-   char eye [] = "/\\";
-   for( byte2 = 1; byte2 >= 0; byte2--)
+   while(Serial.available() > 0)
+   {
+     Serial.write("before read");
+     inChar = Serial.read(); // Read a character
+     Serial.write("after read");
+     //char eye [] = "/\\";
+   //for( byte2 = 1; byte2 >= 0; byte2--)
        for (byte1 = 3; byte1 >= 0; byte1--)
        {
            digitalWrite(latchPin, LOW);           //Pull latch LOW to start sending data
-           shiftOut(dataPin, clockPin, LSBFIRST, get_char_section(eye[byte2], byte1)<<2); //Send the data byte 1
+           shiftOut(dataPin, clockPin, LSBFIRST, get_char_section(inChar, byte1)<<2); //Send the data byte 1
            digitalWrite(latchPin, HIGH);          //Pull latch HIGH to stop sending data
-           delay(100);
+           delay(300);
        }
+   }
 }
