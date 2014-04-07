@@ -10,9 +10,6 @@ int clockPin = P1_5;
 
 int byte1 = 0;         //The counter for storing the byte #1 value
 int byte2 = 0;         //The counter for storing the byte #2 value
-int val = 0;
-
-int incomingByte = 0;   // for incoming serial data
 
 void setup()
 {
